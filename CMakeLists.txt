@@ -30,7 +30,7 @@ target_include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
 )
 
-# Линкуем тесты с библиотеками gtest и CircularBuffer
+# Линкуем
 target_link_libraries(
     main PRIVATE 
     PathFinder
