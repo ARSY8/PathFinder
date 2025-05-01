@@ -54,16 +54,3 @@ target_compile_options(
     -Wall -Wextra -pedantic -Werror
 )
 
-# if(MSVC){
-#     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-#     target_compile_options(
-#         CircularBuffer PRIVATE
-#         /W4
-#     )
-
-#     target_compile_options(
-#         CircularBufferTests PRIVATE
-#         /W4
-#     )
-# }
