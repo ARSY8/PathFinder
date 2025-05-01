@@ -12,9 +12,9 @@ PathFinder::PathFinder(std::vector<int>* maze, const std::pair<int, int> cols_ro
 
     graphSize = getGraphSize();
 
-    dist = new std::vector<int>(100, INF);
+    dist = new std::vector<int>(cols*rows, INF);
     adjList = new std::unordered_map<int, std::vector<int>>;
-    from = new std::vector<int>(100, -1);
+    from = new std::vector<int>(cols*rows, -1);
 
     getAdjList();
     bfs();
