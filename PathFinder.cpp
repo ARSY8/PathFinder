@@ -21,9 +21,6 @@ PathFinder::PathFinder(std::vector<int>& maze, const std::pair<int, int> cols_ro
 
 }
 
-PathFinder::~PathFinder() {
-}
-
 
 int PathFinder::getGraphSize() {
     int graph_size{ 0 };
