@@ -10,10 +10,10 @@
 
 
 class PathFinder {
-    std::vector<int>* maze{ nullptr };
-    std::unordered_map<int, std::vector<int>>* adjList{ nullptr };
-    std::vector<int>* dist;
-    std::vector<int>* from;
+    std::vector<int> maze{ nullptr };
+    std::unordered_map<int, std::vector<int>> adjList{ nullptr };
+    std::vector<int> dist;
+    std::vector<int> from;
     int cols{ 0 };
     int rows{ 0 };
     int heroVertex{ -1 };
@@ -21,7 +21,7 @@ class PathFinder {
     int graphSize{ 0 };
 
 public:
-    PathFinder(std::vector<int>* maze, std::pair<int, int> cols_rows);
+    PathFinder(std::vector<int>& maze, std::pair<int, int> cols_rows);
     ~PathFinder();
 
     void getPath();
