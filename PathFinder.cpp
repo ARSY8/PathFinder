@@ -4,7 +4,7 @@
 
 int INF = 1e9;
 
-PathFinder::PathFinder(std::vector<int>* maze, const std::pair<int, int> cols_rows) {
+PathFinder::PathFinder(std::vector<int>& maze, const std::pair<int, int> cols_rows) {
     cols = cols_rows.first;
     rows = cols_rows.second;
 
@@ -12,9 +12,9 @@ PathFinder::PathFinder(std::vector<int>* maze, const std::pair<int, int> cols_ro
 
     graphSize = getGraphSize();
 
-    dist = new std::vector<int>(cols*rows, INF);
-    adjList = new std::unordered_map<int, std::vector<int>>;
-    from = new std::vector<int>(cols*rows, -1);
+    dist = std::vector<int>(cols*rows, INF);
+    adjList = std::unordered_map<int, std::vector<int>>;
+    from = std::vector<int>(cols*rows, -1);
 
     getAdjList();
     bfs();
@@ -22,16 +22,13 @@ PathFinder::PathFinder(std::vector<int>* maze, const std::pair<int, int> cols_ro
 }
 
 PathFinder::~PathFinder() {
-    delete adjList;
-    delete dist;
-    delete from;
 }
 
 
 int PathFinder::getGraphSize() {
     int graph_size{ 0 };
 
-    for (auto i : *maze) {
+    for (auto i : maze) {
         if (i == 3 || i == 0 || i == 2) {
             graph_size++;
         }
@@ -41,8 +38,6 @@ int PathFinder::getGraphSize() {
 }
 
 void PathFinder::getAdjList() {
-    std::vector<int>& maze_ = *maze;
-    std::unordered_map<int, std::vector<int>>& adjList_ = *adjList;
     int vertex{ 0 };
     int neighbour{ 0 };
 
@@ -52,13 +47,13 @@ void PathFinder::getAdjList() {
     for (int rows_ = 0; rows_ < rows; ++rows_) {
         for (int cols_ = 0; cols_ < cols; ++cols_) {
             vertex = rows_ * cols + cols_;
-            if (maze_[vertex] == 1);
+            if (maze[vertex] == 1);
             else {
-                if (maze_[vertex] == 2 && !doneH) {
+                if (maze[vertex] == 2 && !doneH) {
                     heroVertex = vertex;
                     doneH = true;
                 }
-                if (maze_[vertex] == 3 && !doneE) {
+                if (maze[vertex] == 3 && !doneE) {
                     escapeVertex = vertex;
                     doneE = true;
 
@@ -73,22 +68,22 @@ void PathFinder::getAdjList() {
                     if (dir == 1 && (vertex + 1) % cols == 0) continue;
                     if (dir == -1 && vertex % cols == 0) continue;
 
-                    if (neighbour >= maze_.size() || neighbour < 0) {
+                    if (neighbour >= maze.size() || neighbour < 0) {
                         continue;
                     }
 
-                    if (maze_[neighbour] == 0 || maze_[neighbour] == 2 || maze_[neighbour] == 3) {
-                        adjList_[vertex].push_back(neighbour);
+                    if (maze[neighbour] == 0 || maze[neighbour] == 2 || maze[neighbour] == 3) {
+                        adjList[vertex].push_back(neighbour);
                     }
                 }
             }
         }
     }
 
-    if (heroVertex < 0 || heroVertex >= maze_.size()) {
+    if (heroVertex < 0 || heroVertex >= maze.size()) {
         throw std::runtime_error("Не найдена вершина героя");
     }
-    if (escapeVertex < 0 || escapeVertex >= maze_.size()) {
+    if (escapeVertex < 0 || escapeVertex >= maze.size()) {
         throw std::runtime_error("Не найдена вершина выхода");
     }
 }
@@ -97,23 +92,19 @@ void PathFinder::getAdjList() {
 
 
 void PathFinder::bfs() {
-
-    std::unordered_map<int, std::vector<int>>& adjList_ = *adjList;
-    std::vector<int>& from_ = *from;
-    std::vector<int>& dist_ = *dist;
     std::queue<int> q;
 
-    dist_[heroVertex] = 0;
+    dist[heroVertex] = 0;
     q.push(heroVertex);
 
     while (!q.empty()) {
         int vertex = q.front();
         q.pop();
 
-        for (int target_vertex : adjList_[vertex]) {
-            if (dist_[target_vertex] > dist_[vertex] + 1) {
-                dist_[target_vertex] = dist_[vertex] + 1;
-                from_[target_vertex] = vertex;
+        for (int target_vertex : adjList[vertex]) {
+            if (dist[target_vertex] > dist[vertex] + 1) {
+                dist[target_vertex] = dist[vertex] + 1;
+                from[target_vertex] = vertex;
                 q.push(target_vertex);
             }
         }
@@ -122,15 +113,12 @@ void PathFinder::bfs() {
 
 
 void PathFinder::getPath() {
-    std::vector<int> path;
-    std::vector<int>& from_ = *from;
-
-    if (from_[escapeVertex] == -1) {
+    if (from[escapeVertex] == -1) {
         throw std::runtime_error("Путь к выходу закрыт.");
     }
 
-    for (int vertex = escapeVertex; vertex != -1; vertex = from_[vertex]) {
+    for (int vertex = escapeVertex; vertex != -1; vertex = from[vertex]) {
 
-        (*maze)[vertex] = 8;
+        maze[vertex] = 8;
     }
 }
