@@ -4,7 +4,7 @@
 
 int INF = 1e9;
 
-PathFinder::PathFinder(std::vector<int>& maze, const std::pair<int, int> cols_rows) {
+PathFinder::PathFinder(std::vector<int>& maze_, const std::pair<int, int> cols_rows) : maze{maze_} {
     cols = cols_rows.first;
     rows = cols_rows.second;
 
@@ -12,13 +12,11 @@ PathFinder::PathFinder(std::vector<int>& maze, const std::pair<int, int> cols_ro
 
     graphSize = getGraphSize();
 
-    dist = std::vector<int>(cols*rows, INF);
-    adjList = std::unordered_map<int, std::vector<int>>;
-    from = std::vector<int>(cols*rows, -1);
+    dist.resize( cols * rows,  INF);
+    from.resize( cols * rows, -1 );
 
     getAdjList();
     bfs();
-
 }
 
 

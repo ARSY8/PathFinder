@@ -1,7 +1,7 @@
 #include "FileReaderWriter.hpp"
 
 
-void ReaderWriter::fileReader(const std::string& fileName, std::vector<int>* maze) {
+void ReaderWriter::fileReader(const std::string& fileName, std::vector<int>& maze) {
 
 
 
@@ -14,7 +14,7 @@ void ReaderWriter::fileReader(const std::string& fileName, std::vector<int>* maz
             std::istringstream iss(line);
 
             while (iss >> number) {
-                (*maze).push_back(number);
+                maze.push_back(number);
             }
         }
         ifs.close();
@@ -24,7 +24,7 @@ void ReaderWriter::fileReader(const std::string& fileName, std::vector<int>* maz
     }
 }
 
-void ReaderWriter::fileWriter(const std::vector<int>* maze, const std::pair<int, int> cols_rows) {
+void ReaderWriter::fileWriter(const std::vector<int>& maze, const std::pair<int, int> cols_rows) {
     std::ofstream ofs("path.txt");
 
     int cols = cols_rows.first;
@@ -33,7 +33,7 @@ void ReaderWriter::fileWriter(const std::vector<int>* maze, const std::pair<int,
     if (ofs.is_open()) {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                ofs << (*maze)[i * cols + j] << ' ';
+                ofs << maze[i * cols + j] << ' ';
             }
             ofs << '\n';
         }

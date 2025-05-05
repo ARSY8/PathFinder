@@ -8,7 +8,7 @@ int main() {
 
     std::string fileName = "maze.txt";
 
-    std::vector<int>* maze = new std::vector<int>;
+    std::vector<int> maze;
 
     try {
         ReaderWriter::fileReader(fileName, maze);
@@ -28,10 +28,8 @@ int main() {
     }
     catch (const std::exception& e) {
         std::cerr << "Ошибка: " << e.what() << '\n';
-        delete maze;
         return 1;
     }
-    delete maze;
 
     return 0;
 }
