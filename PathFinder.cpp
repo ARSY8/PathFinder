@@ -1,21 +1,23 @@
+#include <limits>
 #include "PathFinder.hpp"
 #include "FileReaderWriter.hpp"
 
-
-int INF = 1e9;
 
 PathFinder::PathFinder(std::vector<int>& maze_, const std::pair<int, int> cols_rows) : maze{maze_} {
     cols = cols_rows.first;
     rows = cols_rows.second;
 
-    PathFinder::maze = maze;
-
     graphSize = getGraphSize();
 
-    dist.resize( cols * rows,  INF);
+    dist.resize( cols * rows,  std::numeric_limits<unsigned int>::max());
     from.resize( cols * rows, -1 );
 
-    getAdjList();
+    try{
+        getAdjList();
+    }
+    catch (const std::exception& e) {
+        throw;
+    }
     bfs();
 }
 
@@ -82,7 +84,6 @@ void PathFinder::getAdjList() {
         throw std::runtime_error("Не найдена вершина выхода");
     }
 }
-
 
 
 

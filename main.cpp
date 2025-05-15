@@ -1,35 +1,37 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include "FileReaderWriter.hpp"
-#include "PathFinder.hpp"
+// #include <iostream>
+// #include <string>
+// #include <vector>
+// #include "FileReaderWriter.hpp"
+// #include "PathFinder.hpp"
 
-int main() {
+// int main() {
 
-    std::string fileName = "maze.txt";
+//     std::string fileName = "maze.txt";
 
-    std::vector<int> maze;
+//     std::vector<int>* maze = new std::vector<int>;
 
-    try {
-        ReaderWriter::fileReader(fileName, maze);
+//     try {
+//         ReaderWriter::fileReader(fileName, maze);
 
-        auto cols_rows = ReaderWriter::get_cols_rows(fileName);
-        int cols = cols_rows.first;
-        int rows = cols_rows.second;
+//         auto cols_rows = ReaderWriter::get_cols_rows(fileName);
+//         int cols = cols_rows.first;
+//         int rows = cols_rows.second;
 
-        PathFinder pathFinder(maze, cols_rows);
+//         PathFinder pathFinder(maze, cols_rows);
 
-        pathFinder.getPath();
+//         pathFinder.getPath();
 
-        ReaderWriter::fileWriter(maze, { cols, rows });
+//         ReaderWriter::fileWriter(maze, { cols, rows });
 
-        std::cout << "Путь успешно найден и записан в файл path.txt\n";
+//         std::cout << "Путь успешно найден и записан в файл path.txt\n";
 
-    }
-    catch (const std::exception& e) {
-        std::cerr << "Ошибка: " << e.what() << '\n';
-        return 1;
-    }
+//     }
+//     catch (const std::exception& e) {
+//         std::cerr << "Ошибка: " << e.what() << '\n';
+//         delete maze;
+//         return 1;
+//     }
+//     delete maze;
 
-    return 0;
-}
+//     return 0;
+// }
